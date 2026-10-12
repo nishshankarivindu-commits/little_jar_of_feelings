@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#FAF3F0">
+  <title>Little Jar of Feelings</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="magic-ambient" aria-hidden="true">
+    <div class="magical-sparkle" style="left: 10%; animation-delay: 0s; width: 35px; height: 35px;"></div>
+    <div class="magical-sparkle" style="left: 32%; animation-delay: 3s; width: 18px; height: 18px;"></div>
+    <div class="magical-sparkle" style="left: 65%; animation-delay: 6s; width: 45px; height: 45px;"></div>
+    <div class="magical-sparkle" style="left: 88%; animation-delay: 2.2s; width: 25px; height: 25px;"></div>
+    <div class="magical-sparkle" style="left: 50%; animation-delay: 8.4s; width: 40px; height: 40px;"></div>
+  </div>
+
+  <div class="top-action-bar">
+    <div class="header-badge">
+      <span>✦</span>
+      <span>A little reminder for your heart</span>
+      <span>✦</span>
+    </div>
+    <button class="sound-badge-btn" id="audioSwitch" aria-label="Toggle Sound Effects">
+      <span id="audioGlyph">🔔</span>
+      <span id="audioStatus">Sound On</span>
+    </button>
+  </div>
+
+  <header>
+    <h1 class="main-title">
+      <span class="header-heart">♡</span>
+      Little Jar of Feelings
+      <span class="header-heart">♡</span>
+    </h1>
+    <p class="main-subtitle">Choose the colour that matches your moment. Open a tiny note made just for you.</p>
+  </header>
+
+  <main class="bottle-stage">
+    <div class="giant-jar-wrapper">
+      <div class="jar-cork"></div>
+      <div class="jar-lip"></div>
+      <div class="jar-neck"></div>
+      
+      <div class="jar-body" id="jarContainer">
+        <div class="glass-highlight-strip"></div>
+        <div class="jar-liquid">
+          <div class="liquid-wave-bg"></div>
+        </div>
+
+        <!-- TAGS WITH FULL COLOR & ICONS INSIDE -->
+        <div class="tags-container" id="bottleTagsOverlay">
+          
+          <button class="bottle-embedded-tag" data-category="happy" aria-label="When you are happy" style="background-color: #F8C8D8;">
+            <div class="tag-content">
+              <span class="tag-icon">☀️</span>
+              <span class="tag-label">When you are happy...</span>
+            </div>
+            <span class="tag-chevron">›</span>
+          </button>
+
+          <button class="bottle-embedded-tag" data-category="sad" aria-label="When you are sad" style="background-color: #F77F9B;">
+            <div class="tag-content">
+              <span class="tag-icon">🌧️</span>
+              <span class="tag-label">When you are sad...</span>
+            </div>
+            <span class="tag-chevron">›</span>
+          </button>
+
+          <button class="bottle-embedded-tag" data-category="alone" aria-label="When you feel alone" style="background-color: #FAD477;">
+            <div class="tag-content">
+              <span class="tag-icon">🌙</span>
+              <span class="tag-label">When you feel alone...</span>
+            </div>
+            <span class="tag-chevron">›</span>
+          </button>
+
+          <button class="bottle-embedded-tag" data-category="miss_home" aria-label="When you miss home" style="background-color: #A8D86B;">
+            <div class="tag-content">
+              <span class="tag-icon">🏡</span>
+              <span class="tag-label">When you miss home...</span>
+            </div>
+            <span class="tag-chevron">›</span>
+          </button>
+
+          <button class="bottle-embedded-tag" data-category="motivation" aria-label="When you need motivation" style="background-color: #C9E465;">
+            <div class="tag-content">
+              <span class="tag-icon">🌱</span>
+              <span class="tag-label">When you need motivation...</span>
+            </div>
+            <span class="tag-chevron">›</span>
+          </button>
+
+          <button class="bottle-embedded-tag" data-category="laugh" aria-label="When you need a laugh" style="background-color: #F77F9B;">
+            <div class="tag-content">
+              <span class="tag-icon">😂</span>
+              <span class="tag-label">When you need a laugh...</span>
+            </div>
+            <span class="tag-chevron">›</span>
+          </button>
+
+          <button class="bottle-embedded-tag tag-miss_me" data-category="miss_me" aria-label="When you miss me" style="background-color: #D3ED58;">
+            <div class="tag-content">
+              <span class="tag-label">When you miss me... ♥</span>
+            </div>
+            <span class="tag-chevron" style="opacity:1;">♥</span>
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="instruction-card">
+      <span class="sparkle-decor">✦</span>
+      <span>Tap a label in the jar to read your note</span>
+      <span class="sparkle-decor">✦</span>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="overlayCard" role="dialog" aria-modal="true" aria-labelledby="headerCategory">
+    <div class="modal-viewport">
+      <div class="glow-sparkle-group">
+        <span class="glow-spr s1">✨</span>
+        <span class="glow-spr s2">🌸</span>
+        <span class="glow-spr s3">⭐</span>
+        <span class="glow-spr s4">✨</span>
+      </div>
+
+      <div class="modal-card" id="paperView">
+        <div class="red-paper-margin"></div>
+        
+        <div class="card-top">
+          <div class="category-details-row">
+            <div class="circle-avatar-icon" id="circleIcon">☀️</div>
+            <div class="meta-content-wrapper">
+              <span class="category-title-label" id="headerCategory">Happy</span>
+              <span class="comb-tag-index" id="combIndex">Note #0421 / 10,000</span>
+            </div>
+          </div>
+          <button class="close-btn-corner" id="btnCloseTop" aria-label="Close Note">✕</button>
+        </div>
+
+        <div class="card-main-content">
+          <p class="actual-msg-content" id="modalText">
+            Hey sunshine! Today is a gift. Savor this pause. Have a beautiful day!
+          </p>
+        </div>
+
+        <div class="card-footer">
+          <button class="action-btn btn-abort" id="btnAbort">
+            <span>↩</span>
+            <span>Fold it back</span>
+          </button>
+          <button class="action-btn btn-shuffle" id="btnShuffle">
+            <span>✨</span>
+            <span>Another note</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/messages.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

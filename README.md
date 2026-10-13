@@ -1,10 +1,3 @@
-# Little Jar of Feelings — Web Application
+# Little Jar of Feelings — Classic Glass Bottle (Fixed Bug)
 
-Sweet, playful interactive digital keepsake with:
-- Playful Fredoka & Quicksand fonts
-- 7 specific emotional categories mounted directly on the jar body with full backgrounds.
-- Emoticons integrated back onto the tags!
-- Beautiful Paper unrolling animation!
-- A sweet magical glissando (harp) unrolling sound effect.
-- Calm generative ambient background music!
-- 100% offline ready!
+Restored the beautiful glass jar UI with calm animations, 10,000 combinations, and fixed the "invisible text / stuck text" javascript bug.

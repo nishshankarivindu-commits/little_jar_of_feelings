@@ -61,7 +61,7 @@ const CATEGORIES_DATA = {
     "button_text": "When you are sad...",
     "icon": "\ud83c\udf27\ufe0f",
     "bg_color": "#F77F9B",
-    "text_color": "#3C2E3D",
+    "text_color": "#ffffff",
     "A": [
       "Gentle soul,",
       "Tired heart,",
@@ -285,7 +285,7 @@ const CATEGORIES_DATA = {
     "button_text": "When you need a laugh...",
     "icon": "\ud83d\ude02",
     "bg_color": "#F77F9B",
-    "text_color": "#3C2E3D",
+    "text_color": "#ffffff",
     "A": [
       "Hey giggler!",
       "Ready to smile?",

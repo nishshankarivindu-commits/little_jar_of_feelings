@@ -273,7 +273,7 @@
       gap: 6px;
     }
 
-    /* TAG STYLING - FULL BACKGROUND COLOR + ICONS INCLUDED */
+    /* TAG STYLING */
     .bottle-embedded-tag {
       width: 90%;
       max-width: 220px;
@@ -285,7 +285,7 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: all 0.2s ease;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
       text-decoration: none;
       touch-action: manipulation;
     }
@@ -299,7 +299,6 @@
       display: flex;
       align-items: center;
     }
-    /* ADDED ICONS BACK WITH MARGIN */
     .bottle-embedded-tag .tag-icon {
       font-size: 15px;
       margin-right: 8px;
@@ -334,7 +333,7 @@
       transform: scale(1.2) rotate(8deg);
     }
     .bottle-embedded-tag:active {
-      transform: scale(0.98);
+      transform: scale(0.96);
     }
 
     .bottle-embedded-tag.tugging {
@@ -424,7 +423,7 @@
       100% { opacity: 0; transform: scale(0.6) rotate(70deg); }
     }
 
-    /* Paper Card - Unrolling Animation */
+    /* Paper Card - Natural Unrolling Animation */
     .modal-card {
       background: #FFFFFF;
       border-radius: 24px;
@@ -449,7 +448,7 @@
       0% {
         height: 0;
         opacity: 0;
-        transform: scaleY(0.05) rotateX(20deg);
+        transform: scaleY(0.05) rotateX(15deg);
       }
       40% {
         opacity: 1;
@@ -567,6 +566,9 @@
       font-weight: 500;
       text-align: center;
       transition: opacity 0.2s ease, transform 0.2s ease;
+      /* Ensuring text is always fully opaque unless explicitly fading */
+      opacity: 1;
+      transform: translateY(0);
     }
     .actual-msg-content.fading {
       opacity: 0;
@@ -622,13 +624,6 @@
     }
     .action-btn:active {
       transform: translateY(1px) scale(0.97);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-      }
     }
 
     @media (max-height: 640px) {

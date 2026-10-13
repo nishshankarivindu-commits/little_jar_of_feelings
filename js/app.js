@@ -48,19 +48,14 @@ class Synthesizer {
         } catch (e) {}
       }
 
-      // Sweet magical glissando for unrolling the paper
       chimeUnroll() {
         this.init();
         if (!this.enabled || !this.ctx) return;
         const t = this.ctx.currentTime;
-        
-        // A gentle, harp-like sweep (Pentatonic scale)
         const scale = [392.00, 440.00, 523.25, 659.25, 783.99, 1046.50]; 
         scale.forEach((freq, i) => {
             this.play(freq, 'sine', t + (i * 0.05), 0.25, 0.06);
         });
-        
-        // Final sweet sparkle
         this.play(1318.51, 'sine', t + (scale.length * 0.05), 0.4, 0.08); 
       }
 
@@ -68,30 +63,28 @@ class Synthesizer {
         this.init();
         if (!this.enabled || !this.ctx) return;
         const t = this.ctx.currentTime;
-        this.play(659.25, 'sine', t, 0.12, 0.15); // E5
-        this.play(987.77, 'sine', t + 0.06, 0.2, 0.11); // B5
+        this.play(659.25, 'sine', t, 0.12, 0.15); 
+        this.play(987.77, 'sine', t + 0.06, 0.2, 0.11); 
       }
 
       chimeShuffle() {
         this.init();
         if (!this.enabled || !this.ctx) return;
         const t = this.ctx.currentTime;
-        this.play(880.00, 'sine', t, 0.1, 0.12); // A5
-        this.play(1318.51, 'sine', t + 0.05, 0.22, 0.1); // E6
+        this.play(880.00, 'sine', t, 0.1, 0.12); 
+        this.play(1318.51, 'sine', t + 0.05, 0.22, 0.1); 
       }
 
       chimeClose() {
         this.init();
         if (!this.enabled || !this.ctx) return;
         const t = this.ctx.currentTime;
-        this.play(587.33, 'sine', t, 0.14, 0.08); // D5
-        this.play(392.00, 'sine', t + 0.06, 0.22, 0.07); // G4
+        this.play(587.33, 'sine', t, 0.14, 0.08); 
+        this.play(392.00, 'sine', t + 0.06, 0.22, 0.07); 
       }
 
-      // BACKGROUND AMBIENT SOUND - Calm, sweet, generative pentatonic waves
       playAmbientNote() {
         if (!this.enabled || !this.ctx) return;
-        // C Major Pentatonic (C4, D4, E4, G4, A4, C5)
         const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]; 
         const freq = notes[Math.floor(Math.random() * notes.length)];
         
@@ -102,9 +95,8 @@ class Synthesizer {
             osc.type = 'sine';
             osc.frequency.setValueAtTime(freq, t);
             
-            // Very slow attack and slow release for ambient drone pad
             gain.gain.setValueAtTime(0, t);
-            gain.gain.linearRampToValueAtTime(0.012, t + 2.0); // Very quiet
+            gain.gain.linearRampToValueAtTime(0.012, t + 2.0); 
             gain.gain.linearRampToValueAtTime(0, t + 6.0);
             
             osc.connect(gain);
@@ -114,7 +106,6 @@ class Synthesizer {
             osc.stop(t + 6.0);
         } catch(e) {}
         
-        // Loop randomly every 1.5 to 3.5 seconds
         this.ambientTimer = setTimeout(() => this.playAmbientNote(), 1500 + Math.random() * 2000);
       }
 
@@ -152,6 +143,7 @@ class Synthesizer {
 
     let targetKey = null;
     let indexArray = null;
+    let shuffleTimer = null; // IMPORTANT: Timer variable to prevent the bug
 
     function createCombination(categoryKey) {
       const cat = CATEGORIES_DATA[categoryKey];
@@ -204,22 +196,35 @@ class Synthesizer {
       dom.combIndex.textContent = `Note #${numericalNo.toLocaleString()} / 10,000`;
       dom.modalText.textContent = generateCuteNote(categoryKey, indexArray);
 
+      // FIX BUG: Prevent text from being stuck invisible if timer was running
+      if (shuffleTimer) clearTimeout(shuffleTimer);
+      dom.modalText.classList.remove('fading');
+      // Guarantee opacity override just in case
+      dom.modalText.style.opacity = '1';
+      dom.modalText.style.transform = 'translateY(0)';
+
       // Reset unroll animation
       dom.paperView.style.animation = 'none';
       dom.paperView.offsetHeight; 
       dom.paperView.style.animation = null;
 
       dom.overlayCard.classList.add('visible');
-      synth.chimeUnroll(); // Sweet magical harp glissando
+      synth.chimeUnroll(); 
     }
 
     function triggerShuffle() {
       if (!targetKey) return;
       synth.chimeShuffle();
 
+      // Clear any pending shuffles to prevent stacking issues
+      if (shuffleTimer) clearTimeout(shuffleTimer);
+
+      dom.modalText.style.opacity = ''; // Remove inline override
+      dom.modalText.style.transform = '';
       dom.modalText.classList.add('fading');
 
-      setTimeout(() => {
+      // Original calm delay restored
+      shuffleTimer = setTimeout(() => {
         indexArray = createCombination(targetKey);
         const numericalNo = findTagIndex(indexArray);
 
@@ -233,17 +238,20 @@ class Synthesizer {
       if (!dom.overlayCard.classList.contains('visible')) return;
       synth.chimeClose();
       dom.overlayCard.classList.remove('visible');
+      // Fix bug: Ensure next open isn't invisible
+      if (shuffleTimer) clearTimeout(shuffleTimer);
+      dom.modalText.classList.remove('fading');
     }
 
     document.querySelectorAll('.bottle-embedded-tag').forEach(badge => {
       badge.addEventListener('click', () => {
-        // Start background ambient music on very first user interaction if not started!
         synth.startAmbient();
         
         const catKey = badge.getAttribute('data-category');
         badge.classList.add('tugging');
         synth.chimeTap();
 
+        // Restored beautiful slow 300ms delay before pop-up
         setTimeout(() => {
           badge.classList.remove('tugging');
           triggerModal(catKey);
